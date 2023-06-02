@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "136249138532",
+    "project_id": "jigsaw-c49a7",
+    "storage_bucket": "jigsaw-c49a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136249138532:android:321e1bb26469061232ee71",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136249138532-lnpjtl4p61e51orulpivr350lguehf8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "b14a3d6def6442f320c503a7e6ad49a643ec9fee"
+          }
+        },
+        {
+          "client_id": "136249138532-fe6logcdp64iv2fsijm8kucvf1bo55fe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMTDw8WCf62ukEz0C9ovmKk5E5GS72DSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136249138532-fe6logcdp64iv2fsijm8kucvf1bo55fe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

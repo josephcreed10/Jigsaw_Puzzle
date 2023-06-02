@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/background_new"
+    android:orientation="vertical"
+
+    >
+    <ImageButton
+        android:layout_width="250dp"
+        android:id="@+id/ctn_gst_btn"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="455dp"
+        android:src="@drawable/caglast1234"
+        android:contentDescription="caglast"
+        tools:ignore="TouchTargetSizeCheck"
+        />
+
+    <ImageButton
+        android:layout_width="182dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ctn_gst_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:src="@drawable/btn_google"
+        android:id="@+id/ggle_btn"
+        android:scaleType="center"
+        android:contentDescription="google"
+
+        />
+
+
+
+
+</RelativeLayout>
