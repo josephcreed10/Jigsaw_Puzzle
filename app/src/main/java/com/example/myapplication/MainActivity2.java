@@ -24,7 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
         newgamebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity2.this,MainActivity3.class);
+                Intent intent= new Intent(MainActivity2.this,PuzzlegridActivity.class);
                 startActivity(intent);
 
 
