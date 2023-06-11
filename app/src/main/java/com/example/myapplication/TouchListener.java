@@ -14,7 +14,7 @@ public class TouchListener implements View.OnTouchListener {
     private float yDelta;
 
     private PuzzleActivity activity;
-    private boolean isFirstPieceMoved;
+    public boolean isFirstPieceMoved;
     public TouchListener(PuzzleActivity activity) {
         this.activity = activity;
         isFirstPieceMoved = false;
@@ -76,5 +76,15 @@ public class TouchListener implements View.OnTouchListener {
             parent.removeView(child);
             parent.addView(child, 0);
         }
+    }
+
+    public void hint(View view){
+        PuzzlePiece piece = (PuzzlePiece) view;
+        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        lParams.leftMargin = piece.xCoord;
+        lParams.topMargin = piece.yCoord;
+        piece.setLayoutParams(lParams);
+        piece.canMove = false;
+        activity.checkGameOver();
     }
 }

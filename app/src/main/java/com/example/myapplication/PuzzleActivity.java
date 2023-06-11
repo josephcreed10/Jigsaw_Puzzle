@@ -16,8 +16,13 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.media.ExifInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,6 +30,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,17 +48,26 @@ public class PuzzleActivity extends AppCompatActivity {
     private Timer timer;
     private int seconds = 0;
     private int minutes = 0;
+    private int hint=0;
+    private int difficulty;
 
 
+    //private boolean isFirstPieceMoved;
 
-
-
+    TouchListener touchListener = new TouchListener(PuzzleActivity.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
 
+        Intent printent = getIntent();
+
+        // Retrieve the variable from the Intent extras
+        if (printent != null) {
+            difficulty = printent.getIntExtra("difficulty",0);
+            // Do something with the received variable
+        }
 
 
       /*  timerTextView = findViewById(R.id.timer_text);
@@ -75,9 +90,6 @@ public class PuzzleActivity extends AppCompatActivity {
         }, 0, 1000); // start timer immediately and update every 1 second*/
 
 
-
-
-
         final RelativeLayout layout = findViewById(R.id.layout);
         final ImageView imageView = findViewById(R.id.imageView);
         Intent intent = getIntent();
@@ -90,59 +102,174 @@ public class PuzzleActivity extends AppCompatActivity {
             public void run() {
                 if (assetName != null) {
                     setPicFromAsset(assetName, imageView);
-                }
-                else if (mCurrentPhotoPath != null) {
+                } else if (mCurrentPhotoPath != null) {
                     setPicFromPath(mCurrentPhotoPath, imageView);
                 }
-                pieces = splitImage();
-                TouchListener touchListener = new TouchListener(PuzzleActivity.this);
+                int rows = 0,cols = 0;
+                if(difficulty==0){
+                    rows=5;
+                    cols=3;
+                }
+                if(difficulty==1){
+                    rows=6;
+                    cols=4;
+                }
+                if(difficulty==2){
+                    rows=7;
+                    cols=5;
+                }
+
+                pieces = splitImage(rows,cols);
+
+
                 // shuffle pieces order
                 Collections.shuffle(pieces);
-                for(PuzzlePiece piece : pieces) {
+                for (PuzzlePiece piece : pieces) {
                     layout.addView(piece);
                     piece.setOnTouchListener(touchListener);
+                   // isFirstPieceMoved=touchListener.isFirstPieceMoved;
                     // randomize position, on the bottom of the screen
                     RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) piece.getLayoutParams();
                     lParams.leftMargin = new Random().nextInt(layout.getWidth() - piece.pieceWidth);
                     lParams.topMargin = layout.getHeight() - piece.pieceHeight;
                     piece.setLayoutParams(lParams);
+                    imageView.setImageDrawable(null);
+
                 }
             }
         });
+
+
+
+
+        Button button = findViewById(R.id.hint);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Add your desired functionality here
+                hint();
+            }
+        });
+
+
+
+
+
+
+
     }
+
+    public void hint(){
+        int hintlimit=0;
+        switch (difficulty){
+            case 0: hintlimit=4;
+            break;
+            case 1: hintlimit=8;
+            break;
+            case 2: hintlimit=12;
+        }
+        for (PuzzlePiece piece : pieces) {
+            if(!touchListener.isFirstPieceMoved) {
+                startTimer();
+                touchListener.isFirstPieceMoved = true;
+            }
+            if (piece.canMove == true) {
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) piece.getLayoutParams();
+                lParams.leftMargin = piece.xCoord;
+                lParams.topMargin = piece.yCoord;
+                piece.setLayoutParams(lParams);
+                piece.canMove = false;
+                hint++;
+                checkLimit(hintlimit);
+                checkGameOver();
+                break;
+            }
+        }
+    }
+
+
+public void checkLimit(int limit){
+        if(hint>=limit)
+        {
+            Button hint=findViewById(R.id.hint);
+           // hint.setEnabled(false);
+        }
+}
+
+
+
 
     public void checkGameOver() {
         if (isGameOver()) {
 
 
-
             timer.cancel();
-            double score=getScore(minutes,seconds);
+            double score = getScore(minutes, seconds);
             // Create an AlertDialog.Builder instance
-            AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this);
-            builder.setTitle("Game Over");
-            builder.setMessage("Congratulations! Puzzle completed.Completed in "+score+" seconds.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this,R.style.customdlg);
+
+// Inflate custom layout for the dialog
+            View customDialogView = getLayoutInflater().inflate(R.layout.alert, null);
+            builder.setView(customDialogView);
+
+// Retrieve views from the custom layout
+            TextView dialogTitle = customDialogView.findViewById(R.id.dialog_title);
+            TextView dialogMessage = customDialogView.findViewById(R.id.dialog_message);
+
+
+// Set the custom title and message
+            dialogTitle.setText("Game Over");
+            dialogMessage.setText("Congratulations! Puzzle completed. Completed in " + score + " seconds.");
+
+// Disable canceling the dialog by clicking outside or pressing the back button
             builder.setCancelable(false);
 
-            // Set the positive button and its click listener
+// Set the positive button and its click listener
+
+
+        /*    dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(PuzzleActivity.this, MainActivity2.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });*/
+
+
+
+
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // Navigate back to the main screen
+
                     Intent intent = new Intent(PuzzleActivity.this, MainActivity2.class);
                     startActivity(intent);
-
-
-
-
-
                     finish();
+                }
+            });
+
+// Create and show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+
+
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    Button positiveButton = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
+                    // Customize the positive button
+                    positiveButton.setTextColor(getResources().getColor(R.color.cc));
+                    positiveButton.setBackgroundColor(getResources().getColor(R.color.white));
+                    positiveButton.setTextSize(18);
+
                 }
             });
 
 
 
-            // Create and show the AlertDialog
-            AlertDialog alertDialog = builder.create();
+
+
+
             alertDialog.show();
 
 
@@ -177,7 +304,7 @@ public class PuzzleActivity extends AppCompatActivity {
             int photoH = bmOptions.outHeight;
 
             // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
             is.reset();
 
@@ -193,10 +320,11 @@ public class PuzzleActivity extends AppCompatActivity {
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-    private ArrayList<PuzzlePiece> splitImage() {
-        int piecesNumber = 12;
-        int rows = 4;
-        int cols = 3;
+
+    private ArrayList<PuzzlePiece> splitImage(int r,int c) {
+        int rows = r;
+        int cols = c;
+        int piecesNumber = r*c;
 
         ImageView imageView = findViewById(R.id.imageView);
         ArrayList<PuzzlePiece> pieces = new ArrayList<>(piecesNumber);
@@ -219,8 +347,8 @@ public class PuzzleActivity extends AppCompatActivity {
 
 
         // Calculate the with and height of the pieces
-        int pieceWidth = croppedImageWidth/cols;
-        int pieceHeight = croppedImageHeight/rows;
+        int pieceWidth = croppedImageWidth / cols;
+        int pieceHeight = croppedImageHeight / rows;
 
         // Create each bitmap piece and add it to the resulting array
         int yCoord = 0;
@@ -270,7 +398,7 @@ public class PuzzleActivity extends AppCompatActivity {
                 } else {
                     // right bump
                     path.lineTo(pieceBitmap.getWidth(), offsetY + (pieceBitmap.getHeight() - offsetY) / 3);
-                    path.cubicTo(pieceBitmap.getWidth() - bumpSize,offsetY + (pieceBitmap.getHeight() - offsetY) / 6, pieceBitmap.getWidth() - bumpSize, offsetY + (pieceBitmap.getHeight() - offsetY) / 6 * 5, pieceBitmap.getWidth(), offsetY + (pieceBitmap.getHeight() - offsetY) / 3 * 2);
+                    path.cubicTo(pieceBitmap.getWidth() - bumpSize, offsetY + (pieceBitmap.getHeight() - offsetY) / 6, pieceBitmap.getWidth() - bumpSize, offsetY + (pieceBitmap.getHeight() - offsetY) / 6 * 5, pieceBitmap.getWidth(), offsetY + (pieceBitmap.getHeight() - offsetY) / 3 * 2);
                     path.lineTo(pieceBitmap.getWidth(), pieceBitmap.getHeight());
                 }
 
@@ -280,7 +408,7 @@ public class PuzzleActivity extends AppCompatActivity {
                 } else {
                     // bottom bump
                     path.lineTo(offsetX + (pieceBitmap.getWidth() - offsetX) / 3 * 2, pieceBitmap.getHeight());
-                    path.cubicTo(offsetX + (pieceBitmap.getWidth() - offsetX) / 6 * 5,pieceBitmap.getHeight() - bumpSize, offsetX + (pieceBitmap.getWidth() - offsetX) / 6, pieceBitmap.getHeight() - bumpSize, offsetX + (pieceBitmap.getWidth() - offsetX) / 3, pieceBitmap.getHeight());
+                    path.cubicTo(offsetX + (pieceBitmap.getWidth() - offsetX) / 6 * 5, pieceBitmap.getHeight() - bumpSize, offsetX + (pieceBitmap.getWidth() - offsetX) / 6, pieceBitmap.getHeight() - bumpSize, offsetX + (pieceBitmap.getWidth() - offsetX) / 3, pieceBitmap.getHeight());
                     path.lineTo(offsetX, pieceBitmap.getHeight());
                 }
 
@@ -327,6 +455,7 @@ public class PuzzleActivity extends AppCompatActivity {
             yCoord += pieceHeight;
         }
 
+
         return pieces;
     }
 
@@ -362,8 +491,8 @@ public class PuzzleActivity extends AppCompatActivity {
         int imgViewW = imageView.getWidth();
         int imgViewH = imageView.getHeight();
 
-        int top = (int) (imgViewH - actH)/2;
-        int left = (int) (imgViewW - actW)/2;
+        int top = (int) (imgViewH - actH) / 2;
+        int left = (int) (imgViewW - actW) / 2;
 
         ret[0] = left;
         ret[1] = top;
@@ -384,7 +513,7 @@ public class PuzzleActivity extends AppCompatActivity {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
@@ -424,9 +553,7 @@ public class PuzzleActivity extends AppCompatActivity {
     }
 
 
-
-    public void startTimer()
-    {
+    public void startTimer() {
 
         timerTextView = findViewById(R.id.timer_text);
         timer = new Timer();
@@ -450,16 +577,12 @@ public class PuzzleActivity extends AppCompatActivity {
 
     }
 
-        public double getScore(int m,int s)
-        {
-            double sec=(m*60)+s;
-            return  sec;
+    public double getScore(int m, int s) {
+        double sec = (m * 60) + s;
+        return sec;
 
-        }
-
-
-
-
-
+    }
 
 }
+
+

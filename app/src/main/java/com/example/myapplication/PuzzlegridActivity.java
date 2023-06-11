@@ -22,11 +22,18 @@ import java.io.IOException;
 import java.util.Date;
 
 public class PuzzlegridActivity extends AppCompatActivity {
+    private  int difficulty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzlegrid);
+        Intent printent = getIntent();
 
+        // Retrieve the variable from the Intent extras
+        if (printent != null) {
+             difficulty = printent.getIntExtra("difficulty",0);
+            // Do something with the received variable
+        }
         AssetManager am = getAssets();
         try {
             final String[] files = am.list("img");
@@ -36,8 +43,11 @@ public class PuzzlegridActivity extends AppCompatActivity {
             grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                     Intent intent = new Intent(getApplicationContext(), PuzzleActivity.class);
                     intent.putExtra("assetName", files[i % files.length]);
+                    intent.putExtra("difficulty",difficulty);
                     startActivity(intent);
                 }
             });

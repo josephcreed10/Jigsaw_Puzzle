@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="2dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/cc">
 
     <ImageView
         android:id="@+id/gridImageview"

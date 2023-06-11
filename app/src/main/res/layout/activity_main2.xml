@@ -5,32 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity2"
-    android:background="@drawable/second_background"
+    android:background="@drawable/j"
     >
-    <ImageButton
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/g" />
+
+    <Button
+        android:text="New Game"
+        android:textSize="25dp"
         android:layout_width="250dp"
         android:id="@+id/newgamebtn"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="155dp"
-        android:src="@drawable/new_game"
+        android:layout_marginTop="250dp"
+        android:background="@drawable/cstm_btn"
         android:contentDescription="newgame"
         tools:ignore="TouchTargetSizeCheck"
         />
 
-    <ImageButton
+    <Button
+        android:text="New Game"
+        android:textSize="25dp"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_below="@+id/newgamebtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:src="@drawable/loadgame_last"
+        android:background="@drawable/cstm_btn"
         android:id="@+id/loadgame"
         android:scaleType="center"
         android:contentDescription="loadgame"
         />
 
-    <ImageButton
+    <Button
+        android:text="New Game"
+        android:textSize="25dp"
         android:id="@+id/resartgame"
         android:layout_width="250dp"
         android:layout_height="48dp"
@@ -39,25 +53,29 @@
         android:layout_marginTop="38dp"
         android:contentDescription="resartgame"
         android:scaleType="center"
-        android:src="@drawable/restartgame_last" />
-    <ImageButton
+        android:background="@drawable/cstm_btn" />
+    <Button
+        android:text="New Game"
+        android:textSize="25dp"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:id="@+id/leaderboadbtn"
-        android:src="@drawable/leaderboard_last"
+        android:background="@drawable/cstm_btn"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/resartgame"
         android:layout_marginTop="30dp"
         android:contentDescription="leaderboard"
 
         />
-    <ImageButton
+    <Button
+        android:text="New Game"
+        android:textSize="25dp"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:id="@+id/quitbtn"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/leaderboadbtn"
-        android:src="@drawable/quit_last"
+        android:background="@drawable/cstm_btn"
         android:layout_marginTop="30dp"
         android:contentDescription="quit"
 
