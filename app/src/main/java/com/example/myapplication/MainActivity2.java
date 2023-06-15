@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class MainActivity2 extends AppCompatActivity {
 
 
@@ -30,6 +28,9 @@ public class MainActivity2 extends AppCompatActivity {
         Button loadgamebtn = findViewById(R.id.loadgame);
         Button lederbrdbtn = findViewById(R.id.leaderboadbtn);
         Button quitbtn = findViewById(R.id.quitbtn);
+// Java
+
+
 
 
 
@@ -65,7 +66,7 @@ public class MainActivity2 extends AppCompatActivity {
         quitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+
                 Intent i = new Intent(MainActivity2.this,MainActivity.class);
                 startActivity(i);
             }
