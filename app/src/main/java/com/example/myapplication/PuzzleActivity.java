@@ -19,18 +19,23 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.media.ExifInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +58,6 @@ public class PuzzleActivity extends AppCompatActivity {
 
 
     //private boolean isFirstPieceMoved;
-
     TouchListener touchListener = new TouchListener(PuzzleActivity.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,10 @@ public class PuzzleActivity extends AppCompatActivity {
                 });
             }
         }, 0, 1000); // start timer immediately and update every 1 second*/
+
+       
+
+
 
 
         final RelativeLayout layout = findViewById(R.id.layout);
@@ -124,10 +132,10 @@ public class PuzzleActivity extends AppCompatActivity {
 
                 // shuffle pieces order
                 Collections.shuffle(pieces);
-                for (PuzzlePiece piece : pieces) {
+              for (PuzzlePiece piece : pieces) {
                     layout.addView(piece);
                     piece.setOnTouchListener(touchListener);
-                   // isFirstPieceMoved=touchListener.isFirstPieceMoved;
+                    // isFirstPieceMoved=touchListener.isFirstPieceMoved;
                     // randomize position, on the bottom of the screen
                     RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) piece.getLayoutParams();
                     lParams.leftMargin = new Random().nextInt(layout.getWidth() - piece.pieceWidth);
@@ -135,19 +143,70 @@ public class PuzzleActivity extends AppCompatActivity {
                     piece.setLayoutParams(lParams);
                     imageView.setImageDrawable(null);
 
+
+
                 }
             }
+
+
+
+
+
         });
 
 
 
 
         Button button = findViewById(R.id.hint);
+        Switch preview = findViewById(R.id.preview);
+        Button restart=findViewById(R.id.restart);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Add your desired functionality here
                 hint();
+                VibratorUtils.vibrate(37);
+            }
+        });
+
+        preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(preview.isChecked()){
+                    if (assetName != null) {
+                        setPicFromAsset(assetName, imageView);
+                    } else if (mCurrentPhotoPath != null) {
+                        setPicFromPath(mCurrentPhotoPath, imageView);
+                    }
+
+                    // Create a Handler object
+                    Handler handler = new Handler();
+
+// Create a Runnable that will be executed after 5 seconds
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            preview.setChecked(false);
+                            imageView.setImageDrawable(null);// Turn off the switch
+                        }
+                    };
+
+// Schedule the runnable to be executed after  seconds
+                    handler.postDelayed(runnable, 1500);
+
+
+                }
+                else{
+                    imageView.setImageDrawable(null);
+                }
+            }
+        });
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
             }
         });
 
@@ -196,6 +255,12 @@ public void checkLimit(int limit){
         }
 }
 
+
+
+public void preView(){
+    Button preview = findViewById(R.id.preview);
+    preview.setEnabled(false);
+}
 
 
 

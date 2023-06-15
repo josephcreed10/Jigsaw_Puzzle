@@ -1,20 +1,25 @@
 package com.example.myapplication;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.pow;
 import static java.lang.StrictMath.sqrt;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 public class TouchListener implements View.OnTouchListener {
+
     private float xDelta;
     private float yDelta;
 
     private PuzzleActivity activity;
     public boolean isFirstPieceMoved;
+
     public TouchListener(PuzzleActivity activity) {
         this.activity = activity;
         isFirstPieceMoved = false;
@@ -61,6 +66,7 @@ public class TouchListener implements View.OnTouchListener {
                     lParams.leftMargin = piece.xCoord;
                     lParams.topMargin = piece.yCoord;
                     piece.setLayoutParams(lParams);
+                    VibratorUtils.vibrate(37);
                     piece.canMove = false;
                     sendViewToBack(piece);
                     activity.checkGameOver();
@@ -78,7 +84,7 @@ public class TouchListener implements View.OnTouchListener {
         }
     }
 
-    public void hint(View view){
+    /*public void hint(View view){
         PuzzlePiece piece = (PuzzlePiece) view;
         RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
         lParams.leftMargin = piece.xCoord;
@@ -86,5 +92,5 @@ public class TouchListener implements View.OnTouchListener {
         piece.setLayoutParams(lParams);
         piece.canMove = false;
         activity.checkGameOver();
-    }
+    }*/
 }

@@ -1,10 +1,16 @@
 package com.example.myapplication;
 
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity2 extends AppCompatActivity {
 
+
+    private static Vibrator vibrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +30,7 @@ public class MainActivity2 extends AppCompatActivity {
         Button loadgamebtn = findViewById(R.id.loadgame);
         Button lederbrdbtn = findViewById(R.id.leaderboadbtn);
         Button quitbtn = findViewById(R.id.quitbtn);
+
 
 
         newgamebtn.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +48,8 @@ public class MainActivity2 extends AppCompatActivity {
         loadgamebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                VibratorUtils.vibrate(37);
+
 
 
             }

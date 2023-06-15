@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity2"
-    android:background="@drawable/j"
+    android:background="@drawable/jj"
     >
 
 
@@ -18,6 +18,7 @@
     <Button
         android:text="New Game"
         android:textSize="25dp"
+        android:textAllCaps="false"
         android:layout_width="250dp"
         android:id="@+id/newgamebtn"
         android:layout_height="48dp"
@@ -29,8 +30,9 @@
         />
 
     <Button
-        android:text="New Game"
+        android:text="Load Game"
         android:textSize="25dp"
+        android:textAllCaps="false"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_below="@+id/newgamebtn"
@@ -43,43 +45,33 @@
         />
 
     <Button
-        android:text="New Game"
+        android:text="LeaderBoard"
         android:textSize="25dp"
-        android:id="@+id/resartgame"
+        android:textAllCaps="false"
+        android:id="@+id/leaderboadbtn"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_below="@+id/loadgame"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:contentDescription="resartgame"
+        android:contentDescription="leaderboard"
         android:scaleType="center"
         android:background="@drawable/cstm_btn" />
     <Button
-        android:text="New Game"
+        android:text="Quit"
         android:textSize="25dp"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:id="@+id/leaderboadbtn"
-        android:background="@drawable/cstm_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/resartgame"
-        android:layout_marginTop="30dp"
-        android:contentDescription="leaderboard"
-
-        />
-    <Button
-        android:text="New Game"
-        android:textSize="25dp"
+        android:textAllCaps="false"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:id="@+id/quitbtn"
+        android:background="@drawable/cstm_btn"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/leaderboadbtn"
-        android:background="@drawable/cstm_btn"
         android:layout_marginTop="30dp"
         android:contentDescription="quit"
 
         />
+
 
 
 
