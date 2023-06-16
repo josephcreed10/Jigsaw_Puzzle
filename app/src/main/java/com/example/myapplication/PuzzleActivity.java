@@ -251,7 +251,7 @@ public void checkLimit(int limit){
         if(hint>=limit)
         {
             Button hint=findViewById(R.id.hint);
-           // hint.setEnabled(false);
+            hint.setEnabled(false);
         }
 }
 
