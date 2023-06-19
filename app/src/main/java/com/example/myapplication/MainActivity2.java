@@ -49,12 +49,15 @@ public class MainActivity2 extends AppCompatActivity {
         loadgamebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VibratorUtils.vibrate(37);
 
 
 
             }
         });
+
+
+
+
 
         lederbrdbtn.setOnClickListener(new View.OnClickListener() {
             @Override
