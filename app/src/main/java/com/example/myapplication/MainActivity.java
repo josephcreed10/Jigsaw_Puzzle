@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,29 +24,22 @@ import com.google.android.gms.tasks.Task;
 public class MainActivity extends AppCompatActivity {
 GoogleSignInOptions gso;
 GoogleSignInClient gsc;
-
+String displayName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageButton googlebtn = findViewById(R.id.ggle_btn);
-        Button gstbtn = findViewById(R.id.ctn_gst_btn);
         VibratorUtils.init(this);
 
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc= GoogleSignIn.getClient(this,gso);
 
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if(acct!=null){
+            navigateToSecondActivity();
+        }
 
-        gstbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
-                finish();
-
-
-            }
-        });
 
 
 
@@ -75,9 +71,11 @@ GoogleSignInClient gsc;
 
         }
         void navigateToSecondActivity(){
+
             finish();
             Intent intent = new Intent(MainActivity.this,MainActivity2.class);
             startActivity(intent);
         }
+
 
 }

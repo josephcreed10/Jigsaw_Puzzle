@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity2"
-    android:background="@drawable/jj"
+
     >
 
     <pl.droidsonroids.gif.GifImageView
@@ -29,7 +29,7 @@
         />
 
     <Button
-        android:text="Load Game"
+        android:text="Sign Out"
         android:textSize="25dp"
         android:textAllCaps="false"
         android:layout_width="250dp"
@@ -38,8 +38,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
         android:background="@drawable/cstm_btn"
-        android:id="@+id/loadgame"
-        android:contentDescription="loadgame"
+        android:id="@+id/signout"
+        android:contentDescription="signout"
         />
 
     <Button
@@ -49,7 +49,7 @@
         android:id="@+id/leaderboadbtn"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_below="@+id/loadgame"
+        android:layout_below="@+id/signout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
         android:contentDescription="leaderboard"
@@ -67,6 +67,20 @@
         android:layout_below="@+id/leaderboadbtn"
         android:layout_marginTop="30dp"
         android:contentDescription="quit"
+
+        />
+    <Button
+        android:text="B"
+        android:textSize="25dp"
+        android:textAllCaps="false"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:id="@+id/b"
+        android:background="@drawable/cstm_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/quitbtn"
+        android:layout_marginTop="30dp"
+        android:contentDescription="B"
 
         />
 

@@ -36,7 +36,7 @@ public class PuzzlegridActivity extends AppCompatActivity {
         }
         AssetManager am = getAssets();
         try {
-            final String[] files = am.list("img");
+            final String[] files = am.list("im");
 
             GridView grid = findViewById(R.id.grid);
             grid.setAdapter(new ImageAdapter(this));

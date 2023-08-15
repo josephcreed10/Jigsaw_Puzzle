@@ -30,6 +30,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ public class PuzzleActivity extends AppCompatActivity {
     private int minutes = 0;
     private int hint=0;
     private int difficulty;
+    String name;
+    String level;
 
 
     //private boolean isFirstPieceMoved;
@@ -56,6 +61,8 @@ public class PuzzleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(PuzzleActivity.this);
+        name=acct.getDisplayName();
 
 
         Intent printent = getIntent();
@@ -108,14 +115,17 @@ public class PuzzleActivity extends AppCompatActivity {
                 }
                 int rows = 0,cols = 0;
                 if(difficulty==0){
+                    level="Easy";
                     rows=5;
                     cols=3;
                 }
                 if(difficulty==1){
+                    level="Medium";
                     rows=6;
                     cols=4;
                 }
                 if(difficulty==2){
+                    level="Hard";
                     rows=7;
                     cols=5;
                 }
@@ -173,6 +183,7 @@ public class PuzzleActivity extends AppCompatActivity {
                     } else if (mCurrentPhotoPath != null) {
                         setPicFromPath(mCurrentPhotoPath, imageView);
                     }
+                    preview.setClickable(false);
 
                     // Create a Handler object
                     Handler handler = new Handler();
@@ -181,6 +192,7 @@ public class PuzzleActivity extends AppCompatActivity {
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
+                            preview.setClickable(true);
                             preview.setChecked(false);
                             imageView.setImageDrawable(null);// Turn off the switch
                         }
@@ -244,7 +256,7 @@ public void checkLimit(int limit){
         if(hint>=limit)
         {
             Button hint=findViewById(R.id.hint);
-            hint.setEnabled(false);
+            //hint.setEnabled(false);
         }
 }
 
@@ -263,6 +275,7 @@ public void preView(){
 
             timer.cancel();
             double score = getScore(minutes, seconds);
+            int Score=(int)score;
             // Create an AlertDialog.Builder instance
             AlertDialog.Builder builder = new AlertDialog.Builder(PuzzleActivity.this,R.style.customdlg);
 
@@ -278,6 +291,9 @@ public void preView(){
 // Set the custom title and message
             dialogTitle.setText("Game Over");
             dialogMessage.setText("Congratulations! Puzzle completed. Completed in " + score + " seconds.");
+            DBHelper mydb=new DBHelper(PuzzleActivity.this);
+
+            mydb.add(name,Score,level);
 
 // Disable canceling the dialog by clicking outside or pressing the back button
             builder.setCancelable(false);
