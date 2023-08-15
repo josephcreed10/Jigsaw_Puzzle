@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity2"
+    android:background="@drawable/jj"
 
     >
 
@@ -69,20 +70,7 @@
         android:contentDescription="quit"
 
         />
-    <Button
-        android:text="B"
-        android:textSize="25dp"
-        android:textAllCaps="false"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:id="@+id/b"
-        android:background="@drawable/cstm_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/quitbtn"
-        android:layout_marginTop="30dp"
-        android:contentDescription="B"
 
-        />
 
 
 

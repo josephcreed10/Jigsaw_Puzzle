@@ -38,7 +38,6 @@ public class MainActivity2 extends AppCompatActivity {
         Button signout = findViewById(R.id.signout);
         Button lederbrdbtn = findViewById(R.id.leaderboadbtn);
         Button quitbtn = findViewById(R.id.quitbtn);
-        Button b = findViewById(R.id.b);
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc= GoogleSignIn.getClient(this,gso);
 // Java
@@ -87,14 +86,7 @@ public class MainActivity2 extends AppCompatActivity {
                 signOut();
             }
         });
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VibratorUtils.vibrate(37);
-                Intent i = new Intent(MainActivity2.this,MainActivity4.class);
-                startActivity(i);
-            }
-        });
+
     }
     void signOut(){
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -17,6 +17,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -44,6 +45,7 @@ import java.util.TimerTask;
 public class PuzzleActivity extends AppCompatActivity {
     ArrayList<PuzzlePiece> pieces;
     String mCurrentPhotoPath;
+    String mCurrentPhotoUri;
 
     public TextView timerTextView;
     private Timer timer;
@@ -103,6 +105,7 @@ public class PuzzleActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String assetName = intent.getStringExtra("assetName");
         mCurrentPhotoPath = intent.getStringExtra("mCurrentPhotoPath");
+        mCurrentPhotoUri = intent.getStringExtra("mCurrentPhotoUri");
         // run image related code after the view was laid out
         // to have all dimensions calculated
         imageView.post(new Runnable() {
@@ -112,6 +115,8 @@ public class PuzzleActivity extends AppCompatActivity {
                     setPicFromAsset(assetName, imageView);
                 } else if (mCurrentPhotoPath != null) {
                     setPicFromPath(mCurrentPhotoPath, imageView);
+                }else if (mCurrentPhotoUri != null) {
+                    imageView.setImageURI(Uri.parse(mCurrentPhotoUri));
                 }
                 int rows = 0,cols = 0;
                 if(difficulty==0){
@@ -182,6 +187,8 @@ public class PuzzleActivity extends AppCompatActivity {
                         setPicFromAsset(assetName, imageView);
                     } else if (mCurrentPhotoPath != null) {
                         setPicFromPath(mCurrentPhotoPath, imageView);
+                    }else if (mCurrentPhotoUri != null) {
+                        imageView.setImageURI(Uri.parse(mCurrentPhotoUri));
                     }
                     preview.setClickable(false);
 

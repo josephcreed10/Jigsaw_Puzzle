@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class PuzzlegridActivity extends AppCompatActivity {
+public class MainActivity4 extends AppCompatActivity {
     private  int difficulty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +122,6 @@ public class PuzzlegridActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Intent intent = new Intent(this, PuzzleActivity.class);
             intent.putExtra("mCurrentPhotoPath", mCurrentPhotoPath);
-            intent.putExtra("difficulty",difficulty);
             startActivity(intent);
         }
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
@@ -130,7 +129,6 @@ public class PuzzlegridActivity extends AppCompatActivity {
 
             Intent intent = new Intent(this, PuzzleActivity.class);
             intent.putExtra("mCurrentPhotoUri", uri.toString());
-            intent.putExtra("difficulty",difficulty);
             startActivity(intent);
         }
     }
