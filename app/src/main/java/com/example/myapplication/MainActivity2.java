@@ -72,9 +72,7 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                MainActivity2.this.finish();
-
-                // on below line we are exiting our activity
+                finishAffinity();
                 System.exit(0);
             }
         });
@@ -86,7 +84,7 @@ public class MainActivity2 extends AppCompatActivity {
                 signOut();
             }
         });
-
+  
     }
     void signOut(){
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -59,7 +59,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     Cursor readallData() {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LEVEL + " IN ('Hard', 'Medium', 'Easy') ORDER BY " + COLUMN_LEVEL + ", " + COLUMN_SCORE + " ASC";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LEVEL + " IN ('Hard', 'Medium', 'Easy') ORDER BY CASE " + COLUMN_LEVEL + " WHEN 'Hard' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Easy' THEN 3 END, " + COLUMN_SCORE + " ASC";
+
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {

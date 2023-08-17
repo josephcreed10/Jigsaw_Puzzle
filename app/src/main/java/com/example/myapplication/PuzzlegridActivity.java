@@ -52,6 +52,7 @@ public class PuzzlegridActivity extends AppCompatActivity {
                     intent.putExtra("assetName", files[i % files.length]);
                     intent.putExtra("difficulty",difficulty);
                     startActivity(intent);
+                    finish();
                 }
             });
         } catch (IOException e) {
@@ -124,6 +125,7 @@ public class PuzzlegridActivity extends AppCompatActivity {
             intent.putExtra("mCurrentPhotoPath", mCurrentPhotoPath);
             intent.putExtra("difficulty",difficulty);
             startActivity(intent);
+            finish();
         }
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
             Uri uri = data.getData();
@@ -132,6 +134,7 @@ public class PuzzlegridActivity extends AppCompatActivity {
             intent.putExtra("mCurrentPhotoUri", uri.toString());
             intent.putExtra("difficulty",difficulty);
             startActivity(intent);
+            finish();
         }
     }
 

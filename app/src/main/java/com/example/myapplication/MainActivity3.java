@@ -34,15 +34,17 @@ public class MainActivity3 extends AppCompatActivity {
 
     }
     void storeDataInArrays(){
+        int sequentialId=1;
         Cursor cursor=myDB.readallData();
         if(cursor.getCount()==0){
             Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
         }else{
             while(cursor.moveToNext()){
-                id.add(cursor.getString(0));
+                id.add(String.valueOf(sequentialId));
                 name.add(cursor.getString(1));
                 score.add(cursor.getString(2));
                 level.add(cursor.getString(3));
+                sequentialId++;
 
             }
         }

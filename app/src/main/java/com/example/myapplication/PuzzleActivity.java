@@ -206,7 +206,7 @@ public class PuzzleActivity extends AppCompatActivity {
                     };
 
 // Schedule the runnable to be executed after  seconds
-                    handler.postDelayed(runnable, 1500);
+                    handler.postDelayed(runnable, 5000);
 
 
                 }
@@ -263,7 +263,7 @@ public void checkLimit(int limit){
         if(hint>=limit)
         {
             Button hint=findViewById(R.id.hint);
-            //hint.setEnabled(false);
+            hint.setEnabled(false);
         }
 }
 
